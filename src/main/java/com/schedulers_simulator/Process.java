@@ -9,6 +9,8 @@ public class Process {
     private Integer arrivalTime;
     private Integer burstTime;
     private Integer priorityNumber;
+    private Integer waitingTime = 0;
+    private Integer turnaroundTime = 0;
 
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.id = id;
@@ -40,5 +42,29 @@ public class Process {
 
     public Integer getPriorityNumber() {
         return priorityNumber;
+    }
+
+    public Integer incrementPriority(){
+        return ++priorityNumber;
+    }
+
+    public void setWaitingTime(Integer waitingTime) {
+        this.waitingTime = waitingTime;
+    }
+
+    public void setTurnaroundTime(Integer turnaroundTime) {
+        this.turnaroundTime = turnaroundTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Process{" +
+                "name='" + name + '\'' +
+                ", arrivalTime=" + arrivalTime +
+                ", burstTime=" + burstTime +
+                ", priorityNumber=" + priorityNumber +
+                ", waitingTime=" + waitingTime +
+                ", turnaroundTime=" + turnaroundTime +
+                '}' + '\n';
     }
 }
