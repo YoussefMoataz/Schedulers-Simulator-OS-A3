@@ -8,5 +8,4 @@ import java.util.List;
 
 public interface Algorithm {
     void run();
-    //void shortestJobFirst(Process[] processes, int contextSwitchTime);
 }
