@@ -4,7 +4,7 @@ import com.schedulers_simulator.Process;
 
 import java.util.*;
 
-public class SRTFScheduling {
+public class SRTFScheduling implements Algorithm {
     private List<Process> processes;
     private PriorityQueue<Process> readyQueue;
     private int currentTime;
@@ -12,13 +12,14 @@ public class SRTFScheduling {
     private int totalWaitingTime;
     private int totalTurnaroundTime;
 
-    public SRTFScheduling(List<Process> processes) {
-        this.processes = processes;
-        this.numProcesses = processes.size();
+    public SRTFScheduling() {
+        this.processes = new ArrayList<>();
         this.readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getRemainingTime));
         this.currentTime = 0;
         this.totalWaitingTime = 0;
         this.totalTurnaroundTime = 0;
+        createSampleList();
+        this.numProcesses = processes.size();
     }
 
     public void run() {
@@ -45,6 +46,7 @@ public class SRTFScheduling {
             }
             currentTime++;
         }
+        printResults();
     }
 
     public void printResults() {
@@ -71,8 +73,7 @@ public class SRTFScheduling {
         System.out.println("Average turnaround time: " + (double) totalTurnaroundTime / numProcesses);
     }
 
-    public static void main(String[] args) {
-        List<Process> processes = new ArrayList<>();
+    private void createSampleList() {
 //        processes.add(new Process(1, "P1", 0, 7, 1));
 //        processes.add(new Process(2, "P2", 2, 5, 1));
 //        processes.add(new Process(3, "P3", 4, 3, 1));
@@ -85,9 +86,10 @@ public class SRTFScheduling {
         processes.add(new Process(5, "P5", 4, 5, 1));
         processes.add(new Process(6, "P6", 5, 15, 1));
         processes.add(new Process(7, "P7", 15, 8, 1));
+    }
 
-        SRTFScheduling scheduler = new SRTFScheduling(processes);
-        scheduler.run();
-        scheduler.printResults();
+    public static void main(String[] args) {
+        Algorithm algorithm = new SRTFScheduling();
+        algorithm.run();
     }
 }
