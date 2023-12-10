@@ -1,6 +1,11 @@
 package com.schedulers_simulator;
 
+import com.schedulers_simulator.algorithms.Algorithm;
+
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class Process {
     private Integer id;
@@ -102,3 +107,7 @@ public class Process {
                 '}' + '\n';
     }
 }
+
+
+
+
