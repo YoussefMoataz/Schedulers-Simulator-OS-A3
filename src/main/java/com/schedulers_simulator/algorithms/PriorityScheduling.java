@@ -32,6 +32,8 @@ public class PriorityScheduling implements Algorithm {
                 runningQueue.add(readyQueue.poll());
             }
 
+            // todo aging = increment priority
+
             Boolean wasEmpty = true;
             while (!runningQueue.isEmpty()) {
                 if (runningQueue.peek().getWaitingTime() == -1) {
