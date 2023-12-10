@@ -9,8 +9,10 @@ public class Process {
     private Integer arrivalTime;
     private Integer burstTime;
     private Integer priorityNumber;
-    private Integer waitingTime = 0;
-    private Integer turnaroundTime = 0;
+    private Integer waitingTime = -1;
+    private Integer turnaroundTime = -1;
+
+    private Integer remainingTime;
 
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.id = id;
@@ -18,6 +20,16 @@ public class Process {
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
+        this.remainingTime = burstTime;
+    }
+
+    public Process(String name, Color color, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
+        this.name = name;
+        this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.remainingTime = burstTime;
     }
 
     public Integer getId() {
@@ -46,6 +58,30 @@ public class Process {
 
     public Integer incrementPriority(){
         return ++priorityNumber;
+    }
+
+    public Integer getWaitingTime() {
+        return waitingTime;
+    }
+
+    public Integer getTurnaroundTime() {
+        return turnaroundTime;
+    }
+
+    public Integer getRemainingTime() {
+        return remainingTime;
+    }
+
+    public Integer getCompletionTime() {
+        return this.arrivalTime + this.turnaroundTime;
+    }
+
+    public void setRemainingTime(Integer remainingTime) {
+        this.remainingTime = remainingTime;
+    }
+
+    public void setCompletionTime(Integer completionTime) {
+        this.turnaroundTime = completionTime - this.arrivalTime;
     }
 
     public void setWaitingTime(Integer waitingTime) {
