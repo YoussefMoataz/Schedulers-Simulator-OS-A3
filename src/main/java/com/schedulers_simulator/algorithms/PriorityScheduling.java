@@ -34,7 +34,11 @@ public class PriorityScheduling implements Algorithm {
 
             Boolean wasEmpty = true;
             while (!runningQueue.isEmpty()) {
+                if (runningQueue.peek().getWaitingTime() == -1) {
+                    runningQueue.peek().setWaitingTime(time);
+                }
                 time += runningQueue.peek().getBurstTime();
+                runningQueue.peek().setTurnaroundTime(time - runningQueue.peek().getWaitingTime());
                 finishedProcesses.add(runningQueue.poll());
                 wasEmpty = false;
             }
@@ -46,6 +50,28 @@ public class PriorityScheduling implements Algorithm {
         }
 
         System.out.println(finishedProcesses);
+        System.out.println("Average waiting time " + getAverageWaitingTime());
+        System.out.println("Average turnaround time " + getAverageTurnaroundTime());
+    }
+
+    private Double getAverageWaitingTime() {
+        Double avg = 0.0;
+
+        for (Process p : finishedProcesses) {
+            avg += p.getWaitingTime();
+        }
+
+        return avg / finishedProcesses.size();
+    }
+
+    private Double getAverageTurnaroundTime() {
+        Double avg = 0.0;
+
+        for (Process p : finishedProcesses) {
+            avg += p.getTurnaroundTime();
+        }
+
+        return avg / finishedProcesses.size();
     }
 
     private void createSampleList() {
