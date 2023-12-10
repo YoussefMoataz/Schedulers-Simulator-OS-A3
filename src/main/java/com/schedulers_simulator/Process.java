@@ -28,15 +28,6 @@ public class Process {
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
-        this.remainingTime = burstTime;
-    }
-
-    public Process(String name, Color color, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
-        this.name = name;
-        this.color = color;
-        this.arrivalTime = arrivalTime;
-        this.burstTime = burstTime;
-        this.priorityNumber = priorityNumber;
     }
 
     public Integer getId() {
