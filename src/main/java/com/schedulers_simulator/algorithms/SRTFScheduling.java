@@ -7,6 +7,7 @@ import java.util.*;
 public class SRTFScheduling implements Algorithm {
     private List<Process> processes;
     private PriorityQueue<Process> readyQueue;
+    private List<String> runningQueue;
     private int currentTime;
     private int numProcesses;
     private int totalWaitingTime;
@@ -15,6 +16,7 @@ public class SRTFScheduling implements Algorithm {
     public SRTFScheduling() {
         this.processes = new ArrayList<>();
         this.readyQueue = new PriorityQueue<>(Comparator.comparingInt(Process::getRemainingTime));
+        this.runningQueue = new ArrayList<>();
         this.currentTime = 0;
         this.totalWaitingTime = 0;
         this.totalTurnaroundTime = 0;
@@ -24,6 +26,7 @@ public class SRTFScheduling implements Algorithm {
 
     public void run() {
         int completedProcesses = 0;
+        Process lastProcess = null;
         while (completedProcesses < numProcesses) {
             for (Process process : processes) {
                 if (process.getArrivalTime() == currentTime) {
@@ -32,6 +35,10 @@ public class SRTFScheduling implements Algorithm {
             }
             if (!readyQueue.isEmpty()) {
                 Process currentProcess = readyQueue.poll();
+                if (lastProcess == null || !lastProcess.getName().equals(currentProcess.getName())) {
+                    runningQueue.add(currentProcess.getName());
+                }
+                lastProcess = currentProcess;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
                 if (currentProcess.getRemainingTime() == 0) {
                     currentProcess.setCompletionTime(currentTime + 1);
@@ -51,15 +58,8 @@ public class SRTFScheduling implements Algorithm {
 
     public void printResults() {
         System.out.println("Processes execution order:");
-        List<Process> completedProcesses = new ArrayList<>();
-        for (Process process : processes) {
-            if (process.getCompletionTime() != null) {
-                completedProcesses.add(process);
-            }
-        }
-        completedProcesses.sort(Comparator.comparing(Process::getCompletionTime));
-        for (Process process : completedProcesses) {
-            System.out.println(process.getName());
+        for (String processName : runningQueue) {
+            System.out.println(processName);
         }
         System.out.println("Waiting time for each process:");
         for (Process process : processes) {
