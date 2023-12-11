@@ -10,8 +10,9 @@ public class SJFScheduling implements Algorithm {
     public SJFScheduling() {
         this.contextSwitchTime = 0; // To be default context switch time if needed
         this.processes = new ArrayList<>();
+        assignProcesses();
     }
-    public void assignProcesses(List<Process> processes, int contextSwitchTime) {
+    public void assignProcesses() {
         processes.add(new Process(1, "P1", 0, 4, 0));
         processes.add(new Process(2, "P2", 1, 8, 0));
         processes.add(new Process(3, "P3", 3, 2, 0));
@@ -85,7 +86,6 @@ public class SJFScheduling implements Algorithm {
     public static void main(String[] args)
     {
         SJFScheduling sjf = new SJFScheduling();
-        sjf.assignProcesses(sjf.processes, sjf.contextSwitchTime = 1);
         sjf.run();
     }
 }
