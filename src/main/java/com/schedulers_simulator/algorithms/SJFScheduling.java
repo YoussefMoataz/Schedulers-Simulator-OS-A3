@@ -7,10 +7,17 @@ import java.util.List;
 public class SJFScheduling implements Algorithm {
     private int contextSwitchTime;
     private List<Process> processes;
-
-    public SJFScheduling(List<Process> processes, int contextSwitchTime) {
-        this.contextSwitchTime = contextSwitchTime;
-        this.processes = processes;
+    public SJFScheduling() {
+        this.contextSwitchTime = 0; // To be default context switch time if needed
+        this.processes = new ArrayList<>();
+    }
+    public void assignProcesses(List<Process> processes, int contextSwitchTime) {
+        processes.add(new Process(1, "P1", 0, 4, 0));
+        processes.add(new Process(2, "P2", 1, 8, 0));
+        processes.add(new Process(3, "P3", 3, 2, 0));
+        processes.add(new Process(4, "P4", 10, 6, 0));
+        processes.add(new Process(5, "P5", 12, 3, 0));
+        contextSwitchTime = 0;
     }
     @Override
     public void run()
@@ -73,47 +80,12 @@ public class SJFScheduling implements Algorithm {
         // Print the average turnaround time and waiting time for all processes
         System.out.println("Average Turnaround Time: " + totalTurnaroundTime / completedProcesses.size());
         System.out.println("Average Waiting Time: " + totalWaitingTime / completedProcesses.size());
-
     }
-    public static void main(String[] args) {
 
-        List<Process> processes = new ArrayList<>();
-        processes.add(new Process(1, "P1", 0, 7, 0));
-        processes.add(new Process(2, "P2", 0, 14, 0));
-        processes.add(new Process(3, "P3", 0, 1, 0));
-        processes.add(new Process(4, "P4", 0, 9, 0));
-        SJFScheduling sjf1 = new SJFScheduling(processes, 1);
-        sjf1.run();
-
-        //Lab Example
-        List<Process> processes1 = new ArrayList<>();
-        processes1.add(new Process(1, "P1", 0, 4, 0));
-        processes1.add(new Process(2, "P2", 1, 8, 0));
-        processes1.add(new Process(3, "P3", 2, 2, 0));
-        processes1.add(new Process(4, "P4", 3, 6, 0));
-        processes1.add(new Process(5, "P5", 4, 3, 0));
-        SJFScheduling sjf2 = new SJFScheduling(processes1, 1);
-        sjf2.run();
-
-        //Lecture Example
-        List<Process> processes2 = new ArrayList<>();
-        processes2.add(new Process(1, "P1", 0, 7, 0));
-        processes2.add(new Process(2, "p2", 2, 4, 0));
-        processes2.add(new Process(3, "p3", 4, 1, 0));
-        processes2.add(new Process(4, "p4", 5, 4, 0));
-        SJFScheduling sjf3 = new SJFScheduling(processes2, 0);
-        sjf3.run();
-
-        List<Process> processes3 = new ArrayList<>();
-        processes3.add(new Process(1, "P1", 0, 4, 0));
-        processes3.add(new Process(2, "P2", 1, 8, 0));
-        processes3.add(new Process(3, "P3", 3, 2, 0));
-        processes3.add(new Process(4, "P4", 10, 6, 0));
-        processes3.add(new Process(5, "P5", 12, 3, 0));
-        SJFScheduling sjf4 = new SJFScheduling(processes3, 1);
-        sjf4.run();
-
-
+    public static void main(String[] args)
+    {
+        SJFScheduling sjf = new SJFScheduling();
+        sjf.assignProcesses(sjf.processes, sjf.contextSwitchTime = 1);
+        sjf.run();
     }
 }
-
