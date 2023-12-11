@@ -32,8 +32,6 @@ public class PriorityScheduling implements Algorithm {
                 runningQueue.add(readyQueue.poll());
             }
 
-            // todo aging = increment priority
-
             Boolean wasIdle = true;
             while (!runningQueue.isEmpty()) {
                 if (runningQueue.peek().getWaitingTime() == -1) {
@@ -42,6 +40,17 @@ public class PriorityScheduling implements Algorithm {
                 time += runningQueue.peek().getBurstTime();
                 runningQueue.peek().setTurnaroundTime(time - runningQueue.peek().getWaitingTime());
                 finishedProcesses.add(runningQueue.poll());
+
+                // solving starvation problem using aging method
+                Queue<Process> tempQueue = new PriorityQueue<>(new ProcessArrivalTimeComparator());
+                while (!runningQueue.isEmpty()) {
+                    runningQueue.peek().incrementPriority();
+                    tempQueue.add(runningQueue.poll());
+                }
+                while (!tempQueue.isEmpty()) {
+                    runningQueue.add(tempQueue.poll());
+                }
+
                 wasIdle = false;
             }
 

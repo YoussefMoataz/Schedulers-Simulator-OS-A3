@@ -55,7 +55,10 @@ public class Process {
     }
 
     public Integer incrementPriority() {
-        return ++priorityNumber;
+        if (priorityNumber == 1){
+            return priorityNumber;
+        }
+        return --priorityNumber;
     }
 
     public Integer getWaitingTime() {
