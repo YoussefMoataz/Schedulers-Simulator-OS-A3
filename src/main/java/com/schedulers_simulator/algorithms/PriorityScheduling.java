@@ -34,7 +34,7 @@ public class PriorityScheduling implements Algorithm {
 
             // todo aging = increment priority
 
-            Boolean wasEmpty = true;
+            Boolean wasIdle = true;
             while (!runningQueue.isEmpty()) {
                 if (runningQueue.peek().getWaitingTime() == -1) {
                     runningQueue.peek().setWaitingTime(time);
@@ -42,10 +42,10 @@ public class PriorityScheduling implements Algorithm {
                 time += runningQueue.peek().getBurstTime();
                 runningQueue.peek().setTurnaroundTime(time - runningQueue.peek().getWaitingTime());
                 finishedProcesses.add(runningQueue.poll());
-                wasEmpty = false;
+                wasIdle = false;
             }
 
-            if (wasEmpty) {
+            if (wasIdle) {
                 time++;
             }
 
