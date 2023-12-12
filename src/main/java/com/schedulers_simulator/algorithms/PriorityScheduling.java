@@ -4,6 +4,10 @@ import com.schedulers_simulator.Process;
 
 import java.util.*;
 
+/**
+ * This class is the implementation of the OS Priority Scheduling algorithm.
+ * @author Youssef Moataz
+ */
 public class PriorityScheduling implements Algorithm {
 
     Queue<Process> readyQueue;
@@ -67,21 +71,17 @@ public class PriorityScheduling implements Algorithm {
 
     private Double getAverageWaitingTime() {
         Double avg = 0.0;
-
         for (Process p : finishedProcesses) {
             avg += p.getWaitingTime();
         }
-
         return avg / finishedProcesses.size();
     }
 
     private Double getAverageTurnaroundTime() {
         Double avg = 0.0;
-
         for (Process p : finishedProcesses) {
             avg += p.getTurnaroundTime();
         }
-
         return avg / finishedProcesses.size();
     }
 
