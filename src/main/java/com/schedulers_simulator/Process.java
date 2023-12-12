@@ -12,6 +12,7 @@ public class Process {
     private Integer waitingTime = -1;
     private Integer turnaroundTime = -1;
     private Integer remainingTime;
+    private Integer quantum;
 
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.id = id;
@@ -25,6 +26,14 @@ public class Process {
     public Process(String name, Color color, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.name = name;
         this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+    }
+
+    public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
+        this.name = name;
+//        this.color = color;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
@@ -91,6 +100,14 @@ public class Process {
 
     public void setTurnaroundTime(Integer turnaroundTime) {
         this.turnaroundTime = turnaroundTime;
+    }
+
+    public Integer getQuantum() {
+        return quantum;
+    }
+
+    public void setQuantum(Integer quantum) {
+        this.quantum = quantum;
     }
 
     @Override
