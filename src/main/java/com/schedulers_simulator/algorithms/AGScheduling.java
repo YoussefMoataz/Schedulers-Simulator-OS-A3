@@ -13,14 +13,9 @@ and remove it from ready queue and add it to the die list). DONE
 
 package com.schedulers_simulator.algorithms;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.Random;
-
 import com.schedulers_simulator.Process;
+
+import java.util.*;
 
 public class AGScheduling implements Algorithm {
 
@@ -50,22 +45,28 @@ public class AGScheduling implements Algorithm {
         Integer currentQuantum = 0;
         Integer currentHalfQuantum = 0;
 
-        while (true){
+        while (true) {
 
-            if (processes.isEmpty() && readyQueue.isEmpty()){
+            if (processes.isEmpty() && readyQueue.isEmpty()) {
+
+                if (currentProcess != null) {
+                    currentTime += currentProcess.getBurstTime();
+                    finishedProcesses.add(currentProcess);
+                }
+
                 break;
             }
 
             // add all arrived at current time to queue
-            while (!processes.isEmpty() && processes.peek().getArrivalTime() == currentTime){
+            while (!processes.isEmpty() && processes.peek().getArrivalTime() == currentTime) {
                 readyQueue.add(processes.poll());
             }
 
-            if (currentProcess == null && !readyQueue.isEmpty()){
+            if (currentProcess == null && !readyQueue.isEmpty()) {
                 currentProcess = readyQueue.remove(0);
             }
 
-            if (currentProcess == null){
+            if (currentProcess == null) {
                 currentTime++;
                 continue;
             }
@@ -74,56 +75,59 @@ public class AGScheduling implements Algorithm {
             currentHalfQuantum = (int) Math.ceil(currentQuantum / 2.0);
 
             // non-preemptive
-            if (currentProcess.getRemainingTime() < currentHalfQuantum){
+            if (currentProcess.getRemainingTime() < currentHalfQuantum) {
                 currentTime += currentProcess.getRemainingTime();
                 currentProcess.setRemainingTime(0);
-//                finishedProcesses.add(currentProcess);
 
-                if (!readyQueue.isEmpty()){
+                if (!readyQueue.isEmpty()) {
+                    finishedProcesses.add(currentProcess);
                     currentProcess = readyQueue.remove(0);
                 }
                 continue;
-            }else{
+            } else {
                 currentTime += currentHalfQuantum;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - currentHalfQuantum);
             }
 
             // add all arrived at current time to queue
-            while (!processes.isEmpty() && processes.peek().getArrivalTime() <= currentTime){
+            while (!processes.isEmpty() && processes.peek().getArrivalTime() <= currentTime) {
                 readyQueue.add(processes.poll());
             }
 
             // preemptive
-            while (currentHalfQuantum < currentQuantum){
+            while (currentHalfQuantum < currentQuantum) {
 
                 // add all arrived at current time to queue
-                while (!processes.isEmpty() && processes.peek().getArrivalTime() <= currentTime){
+                while (!processes.isEmpty() && processes.peek().getArrivalTime() <= currentTime) {
                     readyQueue.add(processes.poll());
                 }
 
-                if (getMinAGFactor() < currentProcess.getAGFactor()){
+                if (getMinAGFactor() < currentProcess.getAGFactor()) {
                     Process currentPreemptive = currentProcess;
                     currentPreemptive.setQuantum(currentPreemptive.getQuantum() + (currentPreemptive.getQuantum() - currentHalfQuantum));
-                    if (!readyQueue.isEmpty()){
+                    if (!readyQueue.isEmpty()) {
+                        finishedProcesses.add(currentProcess);
                         currentProcess = getProcessWithMinAGFactor();
                     }
                     readyQueue.add(currentPreemptive);
                     break;
-                }else{
-                    if (currentProcess.getRemainingTime() == 0){
+                } else {
+                    if (currentProcess.getRemainingTime() == 0) {
                         currentProcess.setQuantum(0);
-                        if (!readyQueue.isEmpty()){
+                        if (!readyQueue.isEmpty()) {
+                            finishedProcesses.add(currentProcess);
                             currentProcess = readyQueue.get(0);
                         }
                         break;
                     }
                     currentProcess.decrementRemainingTime();
                 }
-                
+
                 currentTime++;
-                if (currentProcess.getRemainingTime() == 0){
+                if (currentProcess.getRemainingTime() == 0) {
                     currentProcess.setQuantum(0);
-                    if (!readyQueue.isEmpty()){
+                    if (!readyQueue.isEmpty()) {
+                        finishedProcesses.add(currentProcess);
                         currentProcess = readyQueue.remove(0);
                     }
                     break;
@@ -140,6 +144,7 @@ public class AGScheduling implements Algorithm {
                 Integer addedQuantum = (int) Math.ceil(((double) quantumSum / numProcesses) * 0.1);
 
                 currentProcess.setQuantum(currentProcess.getQuantum() + addedQuantum);
+                finishedProcesses.add(currentProcess);
                 readyQueue.add(currentProcess);
 
                 currentProcess = readyQueue.remove(0);
@@ -147,6 +152,9 @@ public class AGScheduling implements Algorithm {
 
 //            currentTime++;
         }
+
+        System.out.println(currentTime);
+        System.out.println(finishedProcesses);
 
     }
 
