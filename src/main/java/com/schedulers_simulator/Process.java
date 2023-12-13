@@ -39,7 +39,7 @@ public class Process {
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
-         this.remainingTime = burstTime;
+        this.remainingTime = burstTime;
     }
 
     public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum) {
@@ -88,7 +88,7 @@ public class Process {
     }
 
     public Integer incrementPriority() {
-        if (priorityNumber == 1){
+        if (priorityNumber == 1) {
             return priorityNumber;
         }
         return --priorityNumber;
@@ -138,11 +138,11 @@ public class Process {
         this.quantum = quantum;
     }
 
-    public Integer getAGFactor(){
+    public Integer getAGFactor() {
         return agFactor;
     }
 
-    public void setAGFactor(Integer agFactor){
+    public void setAGFactor(Integer agFactor) {
         this.agFactor = agFactor;
     }
 
@@ -159,7 +159,3 @@ public class Process {
                 '}' + '\n';
     }
 }
-
-
-
-

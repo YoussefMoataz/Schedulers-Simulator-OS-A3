@@ -6,6 +6,7 @@ import java.util.*;
 
 /**
  * This class is the implementation of the OS Priority Scheduling algorithm.
+ *
  * @author Youssef Moataz
  */
 public class PriorityScheduling implements Algorithm {

@@ -1,5 +1,7 @@
 package com.schedulers_simulator.algorithms;
+
 import com.schedulers_simulator.Process;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -7,11 +9,13 @@ import java.util.List;
 public class SJFScheduling implements Algorithm {
     private int contextSwitchTime;
     private List<Process> processes;
+
     public SJFScheduling() {
         this.contextSwitchTime = 0;
         this.processes = new ArrayList<>();
         assignProcesses();
     }
+
     public void assignProcesses() {
         processes.add(new Process(1, "P1", 0, 4, 0));
         processes.add(new Process(2, "P2", 1, 8, 0));
@@ -20,9 +24,9 @@ public class SJFScheduling implements Algorithm {
         processes.add(new Process(5, "P5", 12, 3, 0));
         contextSwitchTime = 0;
     }
+
     @Override
-    public void run()
-    {
+    public void run() {
         List<Process> waitingProcesses = new ArrayList<>();
         List<Process> completedProcesses = new ArrayList<>();
 
@@ -47,7 +51,7 @@ public class SJFScheduling implements Algorithm {
                 waitingProcesses.remove(min);
                 completedProcesses.add(min);
                 currentTime += min.getBurstTime() + contextSwitchTime;
-            } else { 
+            } else {
                 currentTime++;
             }
         }
@@ -73,8 +77,7 @@ public class SJFScheduling implements Algorithm {
         System.out.println("Average Waiting Time: " + totalWaitingTime / completedProcesses.size());
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SJFScheduling sjf = new SJFScheduling();
         sjf.run();
     }
