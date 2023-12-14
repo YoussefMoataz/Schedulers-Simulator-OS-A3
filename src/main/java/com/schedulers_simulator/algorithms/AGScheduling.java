@@ -51,6 +51,9 @@ public class AGScheduling implements Algorithm {
 
                 if (currentProcess != null) {
                     currentTime += currentProcess.getBurstTime();
+                    currentProcess.setRemainingTime(0);
+                    // todo increment time with context switching value
+                    currentProcess.setTurnaroundTime(currentTime - currentProcess.getArrivalTime());
                     finishedProcesses.add(currentProcess);
                 }
 
@@ -78,9 +81,11 @@ public class AGScheduling implements Algorithm {
             if (currentProcess.getRemainingTime() < currentHalfQuantum) {
                 currentTime += currentProcess.getRemainingTime();
                 currentProcess.setRemainingTime(0);
+                // todo increment time with context switching value
+                currentProcess.setTurnaroundTime(currentTime - currentProcess.getArrivalTime());
 
+                finishedProcesses.add(currentProcess);
                 if (!readyQueue.isEmpty()) {
-                    finishedProcesses.add(currentProcess);
                     currentProcess = readyQueue.remove(0);
                 }
                 continue;
@@ -105,19 +110,27 @@ public class AGScheduling implements Algorithm {
                 if (getMinAGFactor() < currentProcess.getAGFactor()) {
                     Process currentPreemptive = currentProcess;
                     currentPreemptive.setQuantum(currentPreemptive.getQuantum() + (currentPreemptive.getQuantum() - currentHalfQuantum));
+                    // todo increment time with context switching value
+                    currentPreemptive.setTurnaroundTime(currentTime - currentPreemptive.getArrivalTime());
+
+                    finishedProcesses.add(currentProcess);
                     if (!readyQueue.isEmpty()) {
-                        finishedProcesses.add(currentProcess);
                         currentProcess = getProcessWithMinAGFactor();
                     }
                     readyQueue.add(currentPreemptive);
+
                     break;
                 } else {
                     if (currentProcess.getRemainingTime() == 0) {
                         currentProcess.setQuantum(0);
+                        // todo increment time with context switching value
+                        currentProcess.setTurnaroundTime(currentTime - currentProcess.getArrivalTime());
+
+                        finishedProcesses.add(currentProcess);
                         if (!readyQueue.isEmpty()) {
-                            finishedProcesses.add(currentProcess);
                             currentProcess = readyQueue.get(0);
                         }
+
                         break;
                     }
                     currentProcess.decrementRemainingTime();
@@ -126,10 +139,12 @@ public class AGScheduling implements Algorithm {
                 currentTime++;
                 if (currentProcess.getRemainingTime() == 0) {
                     currentProcess.setQuantum(0);
+
+                    finishedProcesses.add(currentProcess);
                     if (!readyQueue.isEmpty()) {
-                        finishedProcesses.add(currentProcess);
                         currentProcess = readyQueue.remove(0);
                     }
+
                     break;
                 }
                 currentHalfQuantum++;

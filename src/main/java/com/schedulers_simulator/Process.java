@@ -153,8 +153,8 @@ public class Process {
                 ", arrivalTime=" + arrivalTime +
                 ", burstTime=" + burstTime +
                 ", priorityNumber=" + priorityNumber +
-//                ", waitingTime=" + waitingTime +
-//                ", turnaroundTime=" + turnaroundTime +
+                ", waitingTime=" + waitingTime +
+                ", turnaroundTime=" + turnaroundTime +
                 ", remainingTime=" + remainingTime +
                 '}' + '\n';
     }
