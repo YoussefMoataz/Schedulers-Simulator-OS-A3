@@ -1,21 +1,21 @@
-/*
-i. The running process used all its quantum time and still has a job to do
-(add this process to the end of the queue, then increase its Quantum time by (ceil(10% of the (mean of Quantum))) ).
-
-ii. The running process didn't use all its quantum time based on another 
-process converted from ready to running (add this process to the end 
-of the queue, and then increase its Quantum time by the remaining 
-unused Quantum time of this process).
-
-iii. The running process finished its job (set its quantum time to zero
-and remove it from ready queue and add it to the die list). DONE
-*/
-
 package com.schedulers_simulator.algorithms;
 
 import com.schedulers_simulator.Process;
 
 import java.util.*;
+
+/*
+i. The running process used all its quantum time and still has a job to do
+(add this process to the end of the queue, then increase its Quantum time by (ceil(10% of the (mean of Quantum))) ).
+
+ii. The running process didn't use all its quantum time based on another
+process converted from ready to running (add this process to the end
+of the queue, and then increase its Quantum time by the remaining
+unused Quantum time of this process).
+
+iii. The running process finished its job (set its quantum time to zero
+and remove it from ready queue and add it to the die list). DONE
+*/
 
 public class AGScheduling implements Algorithm {
 
