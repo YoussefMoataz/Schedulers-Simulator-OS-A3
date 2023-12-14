@@ -17,13 +17,11 @@ iii. The running process finished its job (set its quantum time to zero
 and remove it from ready queue and add it to the die list). DONE
 */
 
-public class AGScheduling implements Algorithm {
+public class AGScheduling extends Algorithm {
 
-    Queue<Process> processes;
     List<Process> readyQueue;
     List<Process> runningQueue;
     List<Process> finishedProcesses;
-    Map<Integer, Process> finishedProcessesWithTimings;
     Integer initialQuantum;
     Integer numProcesses;
 
@@ -186,7 +184,7 @@ public class AGScheduling implements Algorithm {
 //            currentTime++;
         }
 
-        System.out.println(currentTime);
+//        System.out.println(currentTime);
 //        System.out.println(finishedProcesses);
 
     }
@@ -249,14 +247,6 @@ public class AGScheduling implements Algorithm {
 
     public void setProcesses(Queue processes){
         this.processes = processes;
-    }
-
-    public List<Process> getFinishedProcesses() {
-        return finishedProcesses;
-    }
-
-    public Map<Integer, Process> getFinishedProcessesWithTimings() {
-        return finishedProcessesWithTimings;
     }
 
     public static void main(String[] args) {

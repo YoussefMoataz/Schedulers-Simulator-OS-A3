@@ -1,6 +1,8 @@
 package com.schedulers_simulator;
 
 import com.schedulers_simulator.algorithms.AGScheduling;
+import com.schedulers_simulator.algorithms.Algorithm;
+import com.schedulers_simulator.algorithms.PriorityScheduling;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,59 +21,16 @@ public class Main {
 //        Queue<Process> processes = Main.getProcessesInput(numProcesses);
         Queue<Process> processes = Main.getProcessesInput(4);
 
-        AGScheduling schedulingAlgorithm = new AGScheduling();
+        Algorithm schedulingAlgorithm = new AGScheduling();
         schedulingAlgorithm.setProcesses(processes);
         schedulingAlgorithm.run();
-        List<Process> result = schedulingAlgorithm.getFinishedProcesses();
-        Map<Integer, Process> resultWthTimings = schedulingAlgorithm.getFinishedProcessesWithTimings();
-
-//        System.out.println(result);
 
         JFrame frame = new JFrame("AG Scheduling");
         frame.setBounds(200, 100, 1000, 400);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-//        JPanel panel = new JPanel() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//
-//                int x = 50;
-//                int y = 50;
-//                int width = 60;
-//                int height = 60;
-//
-//                for (Process process : result) {
-//                    g.setColor(Color.BLUE);
-//                    g.drawRect(x, y, width, height);
-//                    g.drawString(process.getName(), x + width / 2 - 5, y + height / 2 + 5);
-//                    x += width + 10;
-//                }
-//            }
-//        };
-//        frame.getContentPane().add(panel);
-
-//        frame.setLayout(new FlowLayout(FlowLayout.LEFT));
-//        for (Process process : result) {
-//            JPanel processPanel = new JPanel();
-//            processPanel.setPreferredSize(new Dimension(70, 70));
-//            processPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-//            processPanel.setBackground(process.getColor());
-//            JLabel label = new JLabel();
-//            String labelString = process.getName();
-//            label.setText(labelString);
-//            processPanel.add(label);
-//            frame.add(processPanel);
-//        }
-
-        List<Map.Entry<Integer, Process>> arr = new ArrayList<>();
-        for (Map.Entry<Integer, Process> pair: resultWthTimings.entrySet()) {
-            arr.add(pair);
-        }
-        arr.sort(new ProcessResultMapComparator());
-
         frame.setLayout(new FlowLayout(FlowLayout.LEFT));
-        for (Map.Entry<Integer, Process> pair: arr) {
+        for (Map.Entry<Integer, Process> pair: schedulingAlgorithm.getFinishedProcesses()) {
             JPanel processPanel = new JPanel();
             processPanel.setLayout(new GridLayout(2, 1));
             processPanel.setPreferredSize(new Dimension(70, 70));
@@ -89,7 +48,7 @@ public class Main {
 
     private static Queue<Process> getProcessesInput(Integer numProcesses) {
 
-        Queue<Process> processes = new PriorityQueue<>(new ProcessArrivalTimeComparator());
+        Queue<Process> processes = new PriorityQueue<>(new Algorithm.ProcessArrivalTimeComparator());
 
         Scanner scanner = new Scanner(System.in);
 
@@ -136,21 +95,6 @@ public class Main {
         scanner.close();
 
         return processes;
-    }
-
-    private static class ProcessArrivalTimeComparator implements Comparator<Process> {
-        @Override
-        public int compare(Process p1, Process p2) {
-            return p1.getArrivalTime() - p2.getArrivalTime();
-        }
-    }
-
-    private static class ProcessResultMapComparator implements Comparator<Map.Entry<Integer, Process>> {
-
-        @Override
-        public int compare(Map.Entry<Integer, Process> o1, Map.Entry<Integer, Process> o2) {
-            return o1.getKey() - o2.getKey();
-        }
     }
 
 }

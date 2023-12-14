@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class SJFScheduling implements Algorithm {
+public class SJFScheduling extends Algorithm {
     private int contextSwitchTime;
     private List<Process> processes;
 
