@@ -2,9 +2,12 @@ package com.schedulers_simulator.algorithms;
 
 import com.schedulers_simulator.Process;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
 
-public class SRTFScheduling implements Algorithm {
+public class SRTFScheduling extends Algorithm {
     private List<Process> processes;
     private PriorityQueue<Process> readyQueue;
     private List<String> runningQueue;

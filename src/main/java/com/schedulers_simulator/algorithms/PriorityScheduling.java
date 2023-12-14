@@ -4,17 +4,20 @@ import com.schedulers_simulator.Process;
 
 import java.util.*;
 
-public class PriorityScheduling implements Algorithm {
+/**
+ * This class is the implementation of the OS Priority Scheduling algorithm.
+ *
+ * @author Youssef Moataz
+ */
+public class PriorityScheduling extends Algorithm {
 
-    Queue<Process> readyQueue;
     Queue<Process> runningQueue;
     List<Process> finishedProcesses;
 
     public PriorityScheduling() {
-        readyQueue = new PriorityQueue<>(new ProcessArrivalTimeComparator());
         runningQueue = new PriorityQueue<>(new ProcessPriorityComparator());
         finishedProcesses = new ArrayList<>();
-        createSampleList();
+//        createSampleList();
     }
 
     @Override
@@ -24,12 +27,12 @@ public class PriorityScheduling implements Algorithm {
 
         while (true) {
 
-            if (readyQueue.isEmpty() && runningQueue.isEmpty()) {
+            if (processes.isEmpty() && runningQueue.isEmpty()) {
                 break;
             }
 
-            while (!readyQueue.isEmpty() && readyQueue.peek().getArrivalTime() <= time) {
-                runningQueue.add(readyQueue.poll());
+            while (!processes.isEmpty() && processes.peek().getArrivalTime() <= time) {
+                runningQueue.add(processes.poll());
             }
 
             Boolean wasIdle = true;
@@ -39,7 +42,7 @@ public class PriorityScheduling implements Algorithm {
                 }
                 time += runningQueue.peek().getBurstTime();
                 runningQueue.peek().setTurnaroundTime(time - runningQueue.peek().getWaitingTime());
-                finishedProcesses.add(runningQueue.poll());
+                finishedProcessesWithTimings.put(time, runningQueue.poll());
 
                 // solving starvation problem using aging method
                 Queue<Process> tempQueue = new PriorityQueue<>(new ProcessArrivalTimeComparator());
@@ -67,21 +70,17 @@ public class PriorityScheduling implements Algorithm {
 
     private Double getAverageWaitingTime() {
         Double avg = 0.0;
-
         for (Process p : finishedProcesses) {
             avg += p.getWaitingTime();
         }
-
         return avg / finishedProcesses.size();
     }
 
     private Double getAverageTurnaroundTime() {
         Double avg = 0.0;
-
         for (Process p : finishedProcesses) {
             avg += p.getTurnaroundTime();
         }
-
         return avg / finishedProcesses.size();
     }
 
@@ -92,23 +91,16 @@ public class PriorityScheduling implements Algorithm {
 //        readyQueue.add(new Process(0, "P4", 0, 1, 5));
 //        readyQueue.add(new Process(0, "P5", 0, 5, 2));
 
-        readyQueue.add(new Process(0, "P1", 0, 17, 4));
-        readyQueue.add(new Process(0, "P2", 3, 6, 9));
-        readyQueue.add(new Process(0, "P3", 4, 10, 3));
-        readyQueue.add(new Process(0, "P4", 29, 4, 8));
+//        readyQueue.add(new Process(0, "P1", 0, 17, 4));
+//        readyQueue.add(new Process(0, "P2", 3, 6, 9));
+//        readyQueue.add(new Process(0, "P3", 4, 10, 3));
+//        readyQueue.add(new Process(0, "P4", 29, 4, 8));
     }
 
     private static class ProcessPriorityComparator implements Comparator<Process> {
         @Override
         public int compare(Process p1, Process p2) {
             return p1.getPriorityNumber() - p2.getPriorityNumber();
-        }
-    }
-
-    private static class ProcessArrivalTimeComparator implements Comparator<Process> {
-        @Override
-        public int compare(Process p1, Process p2) {
-            return p1.getArrivalTime() - p2.getArrivalTime();
         }
     }
 

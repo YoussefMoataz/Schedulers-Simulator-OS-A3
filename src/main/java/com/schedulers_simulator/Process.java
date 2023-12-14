@@ -12,6 +12,18 @@ public class Process {
     private Integer waitingTime = -1;
     private Integer turnaroundTime = -1;
     private Integer remainingTime;
+    private Integer quantum = -1;
+    private Integer agFactor = -1;
+
+    private Color[] PROCESS_COLORS = {
+            Color.decode("#af73f0"),
+            Color.PINK,
+            Color.LIGHT_GRAY,
+            Color.decode("#a1ffd9"),
+            Color.YELLOW,
+            Color.ORANGE,
+            Color.decode("#ff4747")
+    };
 
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.id = id;
@@ -28,6 +40,48 @@ public class Process {
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
+        this.remainingTime = burstTime;
+    }
+
+    public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
+        this.name = name;
+//        this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.remainingTime = burstTime;
+    }
+
+    public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum) {
+        this.name = name;
+//        this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.quantum = quantum;
+        this.remainingTime = burstTime;
+    }
+
+    public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum, Integer agFactor) {
+        this.name = name;
+//        this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.quantum = quantum;
+        this.remainingTime = burstTime;
+        this.agFactor = agFactor;
+    }
+
+    public Process(String name, Integer color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum, Integer agFactor) {
+        this.name = name;
+        this.color = PROCESS_COLORS[color];
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.quantum = quantum;
+        this.remainingTime = burstTime;
+        this.agFactor = agFactor;
     }
 
     public Integer getId() {
@@ -55,7 +109,7 @@ public class Process {
     }
 
     public Integer incrementPriority() {
-        if (priorityNumber == 1){
+        if (priorityNumber == 1) {
             return priorityNumber;
         }
         return --priorityNumber;
@@ -81,6 +135,10 @@ public class Process {
         this.remainingTime = remainingTime;
     }
 
+    public void decrementRemainingTime() {
+        this.remainingTime--;
+    }
+
     public void setCompletionTime(Integer completionTime) {
         this.turnaroundTime = completionTime - this.arrivalTime;
     }
@@ -93,6 +151,22 @@ public class Process {
         this.turnaroundTime = turnaroundTime;
     }
 
+    public Integer getQuantum() {
+        return quantum;
+    }
+
+    public void setQuantum(Integer quantum) {
+        this.quantum = quantum;
+    }
+
+    public Integer getAGFactor() {
+        return agFactor;
+    }
+
+    public void setAGFactor(Integer agFactor) {
+        this.agFactor = agFactor;
+    }
+
     @Override
     public String toString() {
         return "Process{" +
@@ -102,10 +176,7 @@ public class Process {
                 ", priorityNumber=" + priorityNumber +
                 ", waitingTime=" + waitingTime +
                 ", turnaroundTime=" + turnaroundTime +
+                ", remainingTime=" + remainingTime +
                 '}' + '\n';
     }
 }
-
-
-
-
