@@ -15,6 +15,16 @@ public class Process {
     private Integer quantum = -1;
     private Integer agFactor = -1;
 
+    private Color[] PROCESS_COLORS = {
+            Color.decode("#af73f0"),
+            Color.PINK,
+            Color.LIGHT_GRAY,
+            Color.decode("#a1ffd9"),
+            Color.YELLOW,
+            Color.ORANGE,
+            Color.decode("#ff4747")
+    };
+
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
         this.id = id;
         this.name = name;
@@ -55,6 +65,17 @@ public class Process {
     public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum, Integer agFactor) {
         this.name = name;
 //        this.color = color;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priorityNumber = priorityNumber;
+        this.quantum = quantum;
+        this.remainingTime = burstTime;
+        this.agFactor = agFactor;
+    }
+
+    public Process(String name, Integer color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum, Integer agFactor) {
+        this.name = name;
+        this.color = PROCESS_COLORS[color];
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;

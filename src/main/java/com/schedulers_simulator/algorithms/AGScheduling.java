@@ -23,6 +23,7 @@ public class AGScheduling implements Algorithm {
     List<Process> readyQueue;
     List<Process> runningQueue;
     List<Process> finishedProcesses;
+    Map<Integer, Process> finishedProcessesWithTimings;
     Integer initialQuantum;
     Integer numProcesses;
 
@@ -31,6 +32,7 @@ public class AGScheduling implements Algorithm {
         readyQueue = new ArrayList<>();
         runningQueue = new ArrayList<>();
         finishedProcesses = new ArrayList<>();
+        finishedProcessesWithTimings = new HashMap<>();
         initialQuantum = 4;
         createSampleList();
         numProcesses = processes.size();
@@ -57,6 +59,7 @@ public class AGScheduling implements Algorithm {
                     currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
 
                     finishedProcesses.add(currentProcess);
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                 }
 
                 break;
@@ -88,6 +91,7 @@ public class AGScheduling implements Algorithm {
                 currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
 
                 finishedProcesses.add(currentProcess);
+                finishedProcessesWithTimings.put(currentTime, currentProcess);
                 if (!readyQueue.isEmpty()) {
                     currentProcess = readyQueue.remove(0);
                 }
@@ -117,6 +121,7 @@ public class AGScheduling implements Algorithm {
                     // todo increment time with context switching value
 
                     finishedProcesses.add(currentProcess);
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                     if (!readyQueue.isEmpty()) {
                         currentProcess = getProcessWithMinAGFactor();
                     }
@@ -131,6 +136,7 @@ public class AGScheduling implements Algorithm {
                         currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
 
                         finishedProcesses.add(currentProcess);
+                        finishedProcessesWithTimings.put(currentTime, currentProcess);
                         if (!readyQueue.isEmpty()) {
                             currentProcess = readyQueue.get(0);
                         }
@@ -148,6 +154,7 @@ public class AGScheduling implements Algorithm {
                     currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
 
                     finishedProcesses.add(currentProcess);
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                     if (!readyQueue.isEmpty()) {
                         currentProcess = readyQueue.remove(0);
                     }
@@ -170,6 +177,7 @@ public class AGScheduling implements Algorithm {
                 // todo increment time with context switching value
 
                 finishedProcesses.add(currentProcess);
+                finishedProcessesWithTimings.put(currentTime, currentProcess);
                 readyQueue.add(currentProcess);
 
                 currentProcess = readyQueue.remove(0);
@@ -179,7 +187,7 @@ public class AGScheduling implements Algorithm {
         }
 
         System.out.println(currentTime);
-        System.out.println(finishedProcesses);
+//        System.out.println(finishedProcesses);
 
     }
 
@@ -237,6 +245,18 @@ public class AGScheduling implements Algorithm {
         public int compare(Process p1, Process p2) {
             return p1.getArrivalTime() - p2.getArrivalTime();
         }
+    }
+
+    public void setProcesses(Queue processes){
+        this.processes = processes;
+    }
+
+    public List<Process> getFinishedProcesses() {
+        return finishedProcesses;
+    }
+
+    public Map<Integer, Process> getFinishedProcessesWithTimings() {
+        return finishedProcessesWithTimings;
     }
 
     public static void main(String[] args) {
