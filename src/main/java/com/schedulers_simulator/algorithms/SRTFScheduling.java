@@ -103,12 +103,12 @@ public class SRTFScheduling extends Algorithm {
         algorithm.run();
     }
 
-    public Map<Integer,Process> getFinishedProcessesWithTimings() {
+    public Map<Integer, Process> getFinishedProcessesWithTimings() {
         return finishedProcessesWithTimings;
     }
 
 
-    private void setFinishedProcessesWithTimings(Map<Integer,Process> finishedProcessesWithTimings) {
+    private void setFinishedProcessesWithTimings(Map<Integer, Process> finishedProcessesWithTimings) {
         this.finishedProcessesWithTimings = finishedProcessesWithTimings;
     }
 }

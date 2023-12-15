@@ -1,7 +1,11 @@
 package com.schedulers_simulator.algorithms;
+
 import com.schedulers_simulator.Process;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PriorityQueue;
 
 public class SJFScheduling extends Algorithm {
     private int contextSwitchTime;
@@ -9,7 +13,7 @@ public class SJFScheduling extends Algorithm {
 
     public SJFScheduling() {
         this.contextSwitchTime = 0;
-        processes  = new PriorityQueue<>(new ProcessArrivalTimeComparator());
+        processes = new PriorityQueue<>(new ProcessArrivalTimeComparator());
         finishedProcesses = new ArrayList<>();
         finishedProcessesWithTimings = new HashMap<>();
         assignProcesses();
@@ -20,8 +24,7 @@ public class SJFScheduling extends Algorithm {
     }
 
     @Override
-    public void run()
-    {
+    public void run() {
         int currentTime = 0;
         while (!processes.isEmpty()) {
             Process min = null;

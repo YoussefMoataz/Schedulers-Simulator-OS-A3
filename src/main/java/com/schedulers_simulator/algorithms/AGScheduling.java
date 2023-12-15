@@ -185,7 +185,7 @@ public class AGScheduling extends Algorithm {
         }
 
 //        System.out.println(currentTime);
-//        System.out.println(finishedProcesses);
+        System.out.println(finishedProcesses);
 
     }
 

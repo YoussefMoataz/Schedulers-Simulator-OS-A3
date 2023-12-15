@@ -1,9 +1,7 @@
 package com.schedulers_simulator;
 
-import com.schedulers_simulator.algorithms.AGScheduling;
 import com.schedulers_simulator.algorithms.Algorithm;
-import com.schedulers_simulator.algorithms.SJFScheduling;
-import com.schedulers_simulator.algorithms.SRTFScheduling;
+import com.schedulers_simulator.algorithms.PriorityScheduling;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,7 +22,7 @@ public class Main {
 //        Queue<Process> processes = Main.getProcessesInput(numProcesses);
         Queue<Process> processes = Main.getProcessesInput(4);
 
-        Algorithm schedulingAlgorithm = new SJFScheduling();
+        Algorithm schedulingAlgorithm = new PriorityScheduling();
         schedulingAlgorithm.setProcesses(processes);
         schedulingAlgorithm.run();
 

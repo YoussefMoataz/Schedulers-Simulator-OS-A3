@@ -2,7 +2,9 @@ package com.schedulers_simulator.algorithms;
 
 import com.schedulers_simulator.Process;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * This class is the implementation of the OS Priority Scheduling algorithm.
@@ -12,11 +14,9 @@ import java.util.*;
 public class PriorityScheduling extends Algorithm {
 
     Queue<Process> runningQueue;
-    List<Process> finishedProcesses;
 
     public PriorityScheduling() {
         runningQueue = new PriorityQueue<>(new ProcessPriorityComparator());
-        finishedProcesses = new ArrayList<>();
 //        createSampleList();
     }
 
@@ -63,12 +63,10 @@ public class PriorityScheduling extends Algorithm {
 
         }
 
-        System.out.println(finishedProcesses);
+        System.out.println(finishedProcessesWithTimings);
         System.out.println("Average waiting time " + getAverageWaitingTime());
         System.out.println("Average turnaround time " + getAverageTurnaroundTime());
     }
-
-
 
     private void createSampleList() {
 //        readyQueue.add(new Process(0, "P1", 0, 10, 3));
