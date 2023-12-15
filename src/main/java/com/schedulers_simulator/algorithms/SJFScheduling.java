@@ -2,10 +2,7 @@ package com.schedulers_simulator.algorithms;
 
 import com.schedulers_simulator.Process;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class SJFScheduling extends Algorithm {
     private int contextSwitchTime;
@@ -25,6 +22,10 @@ public class SJFScheduling extends Algorithm {
 
     @Override
     public void run() {
+
+        System.out.print("Enter the context switch time: ");
+        this.contextSwitchTime = new Scanner(System.in).nextInt();
+
         int currentTime = 0;
         while (!processes.isEmpty()) {
             Process min = null;
