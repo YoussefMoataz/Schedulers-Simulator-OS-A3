@@ -198,6 +198,7 @@ public class Process {
                 ", waitingTime=" + waitingTime +
                 ", turnaroundTime=" + turnaroundTime +
                 ", remainingTime=" + remainingTime +
+                ", agFactor=" + agFactor +
                 '}' + '\n';
     }
 }

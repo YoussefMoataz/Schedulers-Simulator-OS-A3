@@ -5,10 +5,8 @@ import com.schedulers_simulator.algorithms.Algorithm;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -17,12 +15,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         // uncomment before uploading
-//        System.out.print("Enter the number of processes: ");
-//        int numProcesses = scanner.nextInt();
+        System.out.print("Enter the number of processes: ");
+        int numProcesses = scanner.nextInt();
 
         // uncomment before uploading
-//        Queue<Process> processes = Main.getProcessesInput(numProcesses);
-        Queue<Process> processes = Main.getProcessesInput(4);
+        Queue<Process> processes = Main.getProcessesInput(numProcesses);
+//        Queue<Process> processes = Main.getProcessesInput(4);
 
         // replace with the required algorithm
         Algorithm schedulingAlgorithm = new AGScheduling();
@@ -73,48 +71,48 @@ public class Main {
         Queue<Process> processes = new PriorityQueue<>(new Algorithm.ProcessArrivalTimeComparator());
 
         // uncomment before uploading
-//        Scanner scanner = new Scanner(System.in);
-//        System.out.print("Enter the Round Robin time quantum: ");
-//        int quantum = scanner.nextInt();
-////        System.out.print("Enter the context switch time: ");
-////        int contextSwitchTime = scanner.nextInt();
-//        for (int i = 0; i < numProcesses; i++) {
-//            System.out.println("Enter details for process " + (i + 1) + ":");
-//            System.out.print("Name: ");
-//            String name = scanner.next();
-//
-//            System.out.print("Color: ");
-//            String color = scanner.next();
-//
-//            System.out.print("Burst Time: ");
-//            int burstTime = scanner.nextInt();
-//
-//            System.out.print("Arrival Time: ");
-//            int arrivalTime = scanner.nextInt();
-//
-//            System.out.print("Priority Number: ");
-//            int priority = scanner.nextInt();
-//
-//            int agFactor;
-//            Random random = new Random();
-//            int randomValue = random.nextInt(21);
-//            if (randomValue < 10) {
-//                agFactor = randomValue + arrivalTime + burstTime;
-//            } else if (randomValue > 10) {
-//                agFactor = 10 + arrivalTime + burstTime;
-//            } else {
-//                agFactor = priority + arrivalTime + burstTime;
-//            }
-//
-//            processes.add(new Process(name, color, arrivalTime, burstTime, priority, quantum, agFactor));
-//        }
-//        scanner.close();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the Round Robin time quantum: ");
+        int quantum = scanner.nextInt();
+//        System.out.print("Enter the context switch time: ");
+//        int contextSwitchTime = scanner.nextInt();
+        for (int i = 0; i < numProcesses; i++) {
+            System.out.println("Enter details for process " + (i + 1) + ":");
+            System.out.print("Name: ");
+            String name = scanner.next();
+
+            System.out.print("Color: ");
+            String color = scanner.next();
+
+            System.out.print("Burst Time: ");
+            int burstTime = scanner.nextInt();
+
+            System.out.print("Arrival Time: ");
+            int arrivalTime = scanner.nextInt();
+
+            System.out.print("Priority Number: ");
+            int priority = scanner.nextInt();
+
+            int agFactor;
+            Random random = new Random();
+            int randomValue = random.nextInt(21);
+            if (randomValue < 10) {
+                agFactor = randomValue + arrivalTime + burstTime;
+            } else if (randomValue > 10) {
+                agFactor = 10 + arrivalTime + burstTime;
+            } else {
+                agFactor = priority + arrivalTime + burstTime;
+            }
+
+            processes.add(new Process(name, color, arrivalTime, burstTime, priority, quantum, agFactor));
+        }
+        scanner.close();
 
         // comment before uploading
-        processes.add(new Process("P1", "pink", 0, 17, 4, 4, 20));
-        processes.add(new Process("P2", "teal", 3, 6, 9, 4, 17));
-        processes.add(new Process("P3", "gray", 4, 10, 3, 4, 16));
-        processes.add(new Process("P4", "yellow", 29, 4, 8, 4, 43));
+//        processes.add(new Process("P1", "pink", 0, 17, 4, 4, 20));
+//        processes.add(new Process("P2", "teal", 3, 6, 9, 4, 17));
+//        processes.add(new Process("P3", "gray", 4, 10, 3, 4, 16));
+//        processes.add(new Process("P4", "yellow", 29, 4, 8, 4, 43));
 
         return processes;
     }
