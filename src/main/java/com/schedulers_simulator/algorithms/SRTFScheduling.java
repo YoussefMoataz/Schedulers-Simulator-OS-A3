@@ -24,29 +24,40 @@ public class SRTFScheduling extends Algorithm {
 
     public void run() {
         Process lastProcess = null;
+
         while (!processes.isEmpty() || !readyQueue.isEmpty()) {
+
             while (!processes.isEmpty() && processes.peek().getArrivalTime() == currentTime) {
                 readyQueue.add(processes.poll());
             }
+
             if (!readyQueue.isEmpty()) {
                 Process currentProcess = readyQueue.poll();
                 if (lastProcess == null || !lastProcess.getName().equals(currentProcess.getName())) {
                     runningQueue.add(currentProcess.getName());
                 }
+
                 lastProcess = currentProcess;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
+
                 if (currentProcess.getRemainingTime() == 0) {
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                     currentProcess.setCompletionTime(currentTime + 1);
                     currentProcess.setTurnaroundTime(currentProcess.getCompletionTime() - currentProcess.getArrivalTime());
                     currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
                     totalWaitingTime += currentProcess.getWaitingTime();
                     totalTurnaroundTime += currentProcess.getTurnaroundTime();
+                    processesCopy.remove(currentProcess);
+                    processesCopy.add(currentProcess);
                 } else {
                     readyQueue.add(currentProcess);
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                 }
             }
             currentTime++;
         }
+
+        setFinishedProcessesWithTimings(finishedProcessesWithTimings);
         printResults();
     }
 
@@ -89,5 +100,14 @@ public class SRTFScheduling extends Algorithm {
     public static void main(String[] args) {
         Algorithm algorithm = new SRTFScheduling();
         algorithm.run();
+    }
+
+    public Map<Integer,Process> getFinishedProcessesWithTimings() {
+        return finishedProcessesWithTimings;
+    }
+
+
+    private void setFinishedProcessesWithTimings(Map<Integer,Process> finishedProcessesWithTimings) {
+        this.finishedProcessesWithTimings = finishedProcessesWithTimings;
     }
 }
