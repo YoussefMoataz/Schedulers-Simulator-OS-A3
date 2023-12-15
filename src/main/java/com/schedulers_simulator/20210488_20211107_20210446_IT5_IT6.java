@@ -869,7 +869,7 @@ class Main {
 
             processes.add(new Process(name, color, arrivalTime, burstTime, priority, quantum, agFactor));
         }
-        scanner.close();
+//        scanner.close();
 
         return processes;
     }
