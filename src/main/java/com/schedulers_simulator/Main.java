@@ -30,7 +30,7 @@ public class Main {
         components.setLayout(new GridLayout(3, 0));
 
         JLabel labelAvgWaitTime = new JLabel("Average waiting time = " + schedulingAlgorithm.getAverageWaitingTime().toString());
-        JLabel labelAvgTurnaroundTime = new JLabel("Average waiting time = " + schedulingAlgorithm.getAverageTurnaroundTime().toString());
+        JLabel labelAvgTurnaroundTime = new JLabel("Average turnaround time = " + schedulingAlgorithm.getAverageTurnaroundTime().toString());
 
         components.add(labelAvgWaitTime);
         components.add(labelAvgTurnaroundTime);
