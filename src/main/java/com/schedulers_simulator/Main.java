@@ -12,15 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Scanner scanner = new Scanner(System.in);
-
         // uncomment before uploading
-        System.out.print("Enter the number of processes: ");
-        int numProcesses = scanner.nextInt();
-
-        // uncomment before uploading
-        Queue<Process> processes = Main.getProcessesInput(numProcesses);
-//        Queue<Process> processes = Main.getProcessesInput(4);
+        Queue<Process> processes = Main.getProcessesInput();
+//        Queue<Process> processes = Main.getSampleProcesses();
 
         // replace with the required algorithm
         Algorithm schedulingAlgorithm = new AGScheduling();
@@ -66,12 +60,16 @@ public class Main {
         frame.setVisible(true);
     }
 
-    private static Queue<Process> getProcessesInput(Integer numProcesses) {
+    private static Queue<Process> getProcessesInput() {
 
         Queue<Process> processes = new PriorityQueue<>(new Algorithm.ProcessArrivalTimeComparator());
 
         // uncomment before uploading
         Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter the number of processes: ");
+        int numProcesses = scanner.nextInt();
+
         System.out.print("Enter the Round Robin time quantum: ");
         int quantum = scanner.nextInt();
 //        System.out.print("Enter the context switch time: ");
@@ -108,12 +106,15 @@ public class Main {
         }
         scanner.close();
 
-        // comment before uploading
-//        processes.add(new Process("P1", "pink", 0, 17, 4, 4, 20));
-//        processes.add(new Process("P2", "teal", 3, 6, 9, 4, 17));
-//        processes.add(new Process("P3", "gray", 4, 10, 3, 4, 16));
-//        processes.add(new Process("P4", "yellow", 29, 4, 8, 4, 43));
+        return processes;
+    }
 
+    private static Queue<Process> getSampleProcesses() {
+        Queue<Process> processes = new PriorityQueue<>(new Algorithm.ProcessArrivalTimeComparator());
+        processes.add(new Process("P1", "pink", 0, 17, 4, 4, 20));
+        processes.add(new Process("P2", "teal", 3, 6, 9, 4, 17));
+        processes.add(new Process("P3", "gray", 4, 10, 3, 4, 16));
+        processes.add(new Process("P4", "yellow", 29, 4, 8, 4, 43));
         return processes;
     }
 
