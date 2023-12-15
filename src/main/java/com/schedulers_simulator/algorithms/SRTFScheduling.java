@@ -35,13 +35,14 @@ public class SRTFScheduling extends Algorithm {
                 Process currentProcess = readyQueue.poll();
                 if (lastProcess == null || !lastProcess.getName().equals(currentProcess.getName())) {
                     runningQueue.add(currentProcess.getName());
+                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                 }
 
                 lastProcess = currentProcess;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
 
                 if (currentProcess.getRemainingTime() == 0) {
-                    finishedProcessesWithTimings.put(currentTime, currentProcess);
+//                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                     currentProcess.setCompletionTime(currentTime + 1);
                     currentProcess.setTurnaroundTime(currentProcess.getCompletionTime() - currentProcess.getArrivalTime());
                     currentProcess.setWaitingTime(currentProcess.getTurnaroundTime() - currentProcess.getBurstTime());
@@ -51,7 +52,7 @@ public class SRTFScheduling extends Algorithm {
                     processesCopy.add(currentProcess);
                 } else {
                     readyQueue.add(currentProcess);
-                    finishedProcessesWithTimings.put(currentTime, currentProcess);
+//                    finishedProcessesWithTimings.put(currentTime, currentProcess);
                 }
             }
             currentTime++;
