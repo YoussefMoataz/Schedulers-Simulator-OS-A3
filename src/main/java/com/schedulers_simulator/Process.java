@@ -16,13 +16,13 @@ public class Process {
     private Integer agFactor = -1;
 
     private Color[] PROCESS_COLORS = {
-            Color.decode("#af73f0"),
-            Color.PINK,
-            Color.LIGHT_GRAY,
-            Color.decode("#a1ffd9"),
-            Color.YELLOW,
-            Color.ORANGE,
-            Color.decode("#ff4747")
+            Color.decode("#ff4747"), // red
+            Color.decode("#af73f0"), // purple
+            Color.PINK, // pink
+            Color.LIGHT_GRAY, // gray
+            Color.decode("#a1ffd9"), // teal
+            Color.YELLOW, // yellow
+            Color.ORANGE, // orange
     };
 
     public Process(Integer id, String name, Integer arrivalTime, Integer burstTime, Integer priorityNumber) {
@@ -64,7 +64,7 @@ public class Process {
 
     public Process(String name, String color, Integer arrivalTime, Integer burstTime, Integer priorityNumber, Integer quantum, Integer agFactor) {
         this.name = name;
-//        this.color = color;
+        this.color = getColorByName(color);
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
@@ -165,6 +165,27 @@ public class Process {
 
     public void setAGFactor(Integer agFactor) {
         this.agFactor = agFactor;
+    }
+
+    public Color getColorByName(String name) {
+        name = name.toLowerCase();
+        if (name.contains("red")) {
+            return this.PROCESS_COLORS[0];
+        } else if (name.contains("purple")) {
+            return this.PROCESS_COLORS[1];
+        } else if (name.contains("pink")) {
+            return this.PROCESS_COLORS[2];
+        } else if (name.contains("gray")) {
+            return this.PROCESS_COLORS[3];
+        } else if (name.contains("teal")) {
+            return this.PROCESS_COLORS[4];
+        } else if (name.contains("yellow")) {
+            return this.PROCESS_COLORS[5];
+        } else if (name.contains("orange")) {
+            return this.PROCESS_COLORS[6];
+        } else {
+            return Color.white;
+        }
     }
 
     @Override

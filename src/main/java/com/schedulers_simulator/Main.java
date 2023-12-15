@@ -1,7 +1,7 @@
 package com.schedulers_simulator;
 
+import com.schedulers_simulator.algorithms.AGScheduling;
 import com.schedulers_simulator.algorithms.Algorithm;
-import com.schedulers_simulator.algorithms.PriorityScheduling;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,13 +16,17 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        // uncomment before uploading
 //        System.out.print("Enter the number of processes: ");
 //        int numProcesses = scanner.nextInt();
 
+        // uncomment before uploading
 //        Queue<Process> processes = Main.getProcessesInput(numProcesses);
         Queue<Process> processes = Main.getProcessesInput(4);
 
-        Algorithm schedulingAlgorithm = new PriorityScheduling();
+        // replace with the required algorithm
+        Algorithm schedulingAlgorithm = new AGScheduling();
+
         schedulingAlgorithm.setProcesses(processes);
         schedulingAlgorithm.run();
 
@@ -68,11 +72,12 @@ public class Main {
 
         Queue<Process> processes = new PriorityQueue<>(new Algorithm.ProcessArrivalTimeComparator());
 
-        Scanner scanner = new Scanner(System.in);
-
+        // uncomment before uploading
+//        Scanner scanner = new Scanner(System.in);
 //        System.out.print("Enter the Round Robin time quantum: ");
 //        int quantum = scanner.nextInt();
-
+////        System.out.print("Enter the context switch time: ");
+////        int contextSwitchTime = scanner.nextInt();
 //        for (int i = 0; i < numProcesses; i++) {
 //            System.out.println("Enter details for process " + (i + 1) + ":");
 //            System.out.print("Name: ");
@@ -91,7 +96,6 @@ public class Main {
 //            int priority = scanner.nextInt();
 //
 //            int agFactor;
-//
 //            Random random = new Random();
 //            int randomValue = random.nextInt(21);
 //            if (randomValue < 10) {
@@ -104,13 +108,13 @@ public class Main {
 //
 //            processes.add(new Process(name, color, arrivalTime, burstTime, priority, quantum, agFactor));
 //        }
+//        scanner.close();
 
-        processes.add(new Process("P1", 0, 0, 17, 4, 4, 20));
-        processes.add(new Process("P2", 1, 3, 6, 9, 4, 17));
-        processes.add(new Process("P3", 2, 4, 10, 3, 4, 16));
-        processes.add(new Process("P4", 3, 29, 4, 8, 4, 43));
-
-        scanner.close();
+        // comment before uploading
+        processes.add(new Process("P1", "pink", 0, 17, 4, 4, 20));
+        processes.add(new Process("P2", "teal", 3, 6, 9, 4, 17));
+        processes.add(new Process("P3", "gray", 4, 10, 3, 4, 16));
+        processes.add(new Process("P4", "yellow", 29, 4, 8, 4, 43));
 
         return processes;
     }
