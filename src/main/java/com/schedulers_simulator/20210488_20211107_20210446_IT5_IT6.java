@@ -776,8 +776,8 @@ class Main {
     public static void main(String[] args) {
 
         // uncomment before uploading
-//        Queue<Process> processes = Main.getProcessesInput();
-        Queue<Process> processes = Main.getSampleProcesses();
+        Queue<Process> processes = Main.getProcessesInput();
+//        Queue<Process> processes = Main.getSampleProcesses();
 
         // replace with the required algorithm
         Algorithm schedulingAlgorithm = new AGScheduling();
