@@ -68,21 +68,7 @@ public class PriorityScheduling extends Algorithm {
         System.out.println("Average turnaround time " + getAverageTurnaroundTime());
     }
 
-    private Double getAverageWaitingTime() {
-        Double avg = 0.0;
-        for (Process p : finishedProcesses) {
-            avg += p.getWaitingTime();
-        }
-        return avg / finishedProcesses.size();
-    }
 
-    private Double getAverageTurnaroundTime() {
-        Double avg = 0.0;
-        for (Process p : finishedProcesses) {
-            avg += p.getTurnaroundTime();
-        }
-        return avg / finishedProcesses.size();
-    }
 
     private void createSampleList() {
 //        readyQueue.add(new Process(0, "P1", 0, 10, 3));

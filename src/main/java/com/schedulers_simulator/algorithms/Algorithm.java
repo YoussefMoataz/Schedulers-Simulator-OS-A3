@@ -47,4 +47,24 @@ public abstract class Algorithm {
         }
     }
 
+    public Double getAverageWaitingTime() {
+        Set<Process> finishedSet = new HashSet<>(finishedProcessesWithTimings.values());
+
+        Double avg = 0.0;
+        for (Process p : finishedSet) {
+            avg += p.getWaitingTime();
+        }
+        return avg / finishedSet.size();
+    }
+
+    public Double getAverageTurnaroundTime() {
+        Set<Process> finishedSet = new HashSet<>(finishedProcessesWithTimings.values());
+
+        Double avg = 0.0;
+        for (Process p : finishedSet) {
+            avg += p.getTurnaroundTime();
+        }
+        return avg / finishedSet.size();
+    }
+
 }

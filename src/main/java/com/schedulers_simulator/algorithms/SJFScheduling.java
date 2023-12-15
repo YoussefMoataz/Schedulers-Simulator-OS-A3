@@ -1,45 +1,31 @@
 package com.schedulers_simulator.algorithms;
-
 import com.schedulers_simulator.Process;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class SJFScheduling extends Algorithm {
     private int contextSwitchTime;
-    private List<Process> processes;
+    List<Process> finishedProcesses;
 
     public SJFScheduling() {
         this.contextSwitchTime = 0;
-        this.processes = new ArrayList<>();
+        processes  = new PriorityQueue<>(new ProcessArrivalTimeComparator());
+        finishedProcesses = new ArrayList<>();
+        finishedProcessesWithTimings = new HashMap<>();
         assignProcesses();
     }
 
     public void assignProcesses() {
-        processes.add(new Process(1, "P1", 0, 4, 0));
-        processes.add(new Process(2, "P2", 1, 8, 0));
-        processes.add(new Process(3, "P3", 3, 2, 0));
-        processes.add(new Process(4, "P4", 10, 6, 0));
-        processes.add(new Process(5, "P5", 12, 3, 0));
-        contextSwitchTime = 0;
+        contextSwitchTime = 1;
     }
 
     @Override
-    public void run() {
-        List<Process> waitingProcesses = new ArrayList<>();
-        List<Process> completedProcesses = new ArrayList<>();
-
-        for (Process process : processes) {
-            waitingProcesses.add(process);
-        }
-
+    public void run()
+    {
         int currentTime = 0;
-        while (!waitingProcesses.isEmpty()) {
-            waitingProcesses.sort(Comparator.comparingInt(Process::getArrivalTime));
-
+        while (!processes.isEmpty()) {
             Process min = null;
-            for (Process process : waitingProcesses) {
+            for (Process process : processes) {
                 if (process.getArrivalTime() <= currentTime) {
                     if (min == null || process.getBurstTime() < min.getBurstTime()) {
                         min = process;
@@ -48,9 +34,10 @@ public class SJFScheduling extends Algorithm {
             }
 
             if (min != null) {
-                waitingProcesses.remove(min);
-                completedProcesses.add(min);
+                processes.remove(min);
+                finishedProcesses.add(min);
                 currentTime += min.getBurstTime() + contextSwitchTime;
+                finishedProcessesWithTimings.put(currentTime, min);
             } else {
                 currentTime++;
             }
@@ -59,7 +46,7 @@ public class SJFScheduling extends Algorithm {
         double totalBurst = 0;
         double totalTurnaroundTime = 0;
         double totalWaitingTime = 0;
-        for (Process process : completedProcesses) {
+        for (Process process : finishedProcesses) {
             totalBurst += process.getBurstTime() + contextSwitchTime;
             double turnAroundTime = (totalBurst) - process.getArrivalTime();
             process.setTurnaroundTime((int) turnAroundTime);
@@ -72,9 +59,9 @@ public class SJFScheduling extends Algorithm {
             totalWaitingTime += waitingTime;
         }
 
-        System.out.println("New List Using Shortest Job First: \n" + completedProcesses + "\n");
-        System.out.println("Average Turnaround Time: " + totalTurnaroundTime / completedProcesses.size());
-        System.out.println("Average Waiting Time: " + totalWaitingTime / completedProcesses.size());
+        System.out.println("New List Using Shortest Job First\n" + finishedProcesses + "\n");
+        System.out.println("Average Turnaround Time: " + totalTurnaroundTime / finishedProcesses.size());
+        System.out.println("Average Waiting Time: " + totalWaitingTime / finishedProcesses.size());
     }
 
     public static void main(String[] args) {

@@ -2,12 +2,15 @@ package com.schedulers_simulator;
 
 import com.schedulers_simulator.algorithms.AGScheduling;
 import com.schedulers_simulator.algorithms.Algorithm;
-import com.schedulers_simulator.algorithms.PriorityScheduling;
+import com.schedulers_simulator.algorithms.SJFScheduling;
+import com.schedulers_simulator.algorithms.SRTFScheduling;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
-import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Scanner;
 
 public class Main {
 
@@ -21,7 +24,7 @@ public class Main {
 //        Queue<Process> processes = Main.getProcessesInput(numProcesses);
         Queue<Process> processes = Main.getProcessesInput(4);
 
-        Algorithm schedulingAlgorithm = new AGScheduling();
+        Algorithm schedulingAlgorithm = new SJFScheduling();
         schedulingAlgorithm.setProcesses(processes);
         schedulingAlgorithm.run();
 
@@ -29,19 +32,36 @@ public class Main {
         frame.setBounds(200, 100, 1000, 400);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        frame.setLayout(new FlowLayout(FlowLayout.LEFT));
-        for (Map.Entry<Integer, Process> pair: schedulingAlgorithm.getFinishedProcesses()) {
+        JPanel components = new JPanel();
+        components.setLayout(new GridLayout(3, 0));
+
+        JLabel labelAvgWaitTime = new JLabel("Average waiting time = " + schedulingAlgorithm.getAverageWaitingTime().toString());
+        JLabel labelAvgTurnaroundTime = new JLabel("Average waiting time = " + schedulingAlgorithm.getAverageTurnaroundTime().toString());
+
+        components.add(labelAvgWaitTime);
+        components.add(labelAvgTurnaroundTime);
+
+        JPanel processesComponents = new JPanel();
+        processesComponents.setLayout(new FlowLayout(FlowLayout.LEFT));
+        for (Map.Entry<Integer, Process> pair : schedulingAlgorithm.getFinishedProcesses()) {
             JPanel processPanel = new JPanel();
             processPanel.setLayout(new GridLayout(2, 1));
             processPanel.setPreferredSize(new Dimension(70, 70));
             processPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             processPanel.setBackground(pair.getValue().getColor());
-            JLabel label1 = new JLabel(pair.getValue().getName());
-            JLabel label2 = new JLabel(pair.getKey().toString());
-            processPanel.add(label1);
-            processPanel.add(label2);
-            frame.add(processPanel);
+
+            JLabel labelName = new JLabel(pair.getValue().getName());
+            labelName.setHorizontalAlignment(SwingConstants.CENTER);
+            processPanel.add(labelName);
+            JLabel labelTime = new JLabel(pair.getKey().toString());
+            labelTime.setHorizontalAlignment(SwingConstants.CENTER);
+
+            processPanel.add(labelTime);
+            processesComponents.add(processPanel);
         }
+        components.add(processesComponents);
+
+        frame.add(components);
 
         frame.setVisible(true);
     }
